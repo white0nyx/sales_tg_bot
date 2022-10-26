@@ -23,6 +23,9 @@ def register_pyaterochka(dp: Dispatcher):
 async def show_sales(message: Message, state: FSMContext):
     data = await state.get_data()
     store = data.get('city_code')
+    if store is None:
+        store = '34ID'
+
     today = datetime.datetime.now().strftime("%d%m%y")
     filename = f'data/{store}_{today}.db'
 
