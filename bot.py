@@ -44,8 +44,8 @@ async def main():
     register_all_filters(dp)
     register_all_handlers(dp)
 
-    await dp.bot.set_my_commands([
-        BotCommand('start', 'Запустить бота')])
+    await dp.bot.set_my_commands([BotCommand('start', 'Запустить бота'),
+                                  BotCommand('set_city', 'Выбрать город')])
 
     # start
     try:
