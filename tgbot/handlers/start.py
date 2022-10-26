@@ -2,6 +2,8 @@ from aiogram import Dispatcher
 from aiogram.dispatcher.filters import Command
 from aiogram.types import Message
 
+from tgbot.keyboards.reply import choice_company
+
 
 async def start(message: Message):
     await message.answer('👋')
@@ -9,7 +11,7 @@ async def start(message: Message):
                          'Чтобы я показывал самые актуальные для тебя скидки, я должен знать твой город.\n'
                          'Для установки города ты можешь воспользоваться командой /set_city. Если ты этого не сделаешь, '
                          'я буду показывать тебе скидки в городе Ростов-на-Дону.\n\n'
-                         'Удачных покупок!')
+                         'Удачных покупок!', reply_markup=choice_company)
 
 
 def register_start(dp: Dispatcher):

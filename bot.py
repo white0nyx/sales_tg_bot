@@ -9,6 +9,7 @@ from aiogram.types import BotCommand
 from tgbot.config import load_config
 from tgbot.handlers.set_city import register_all_set_city
 from tgbot.handlers.start import register_start
+from tgbot.handlers.stores import register_all_stores
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ def register_all_filters(dp):
 def register_all_handlers(dp):
     register_start(dp)
     register_all_set_city(dp)
+    register_all_stores(dp)
 
 
 async def main():
