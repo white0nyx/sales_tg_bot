@@ -60,7 +60,6 @@ def get_all_sales_from_all_pages(filename, store):
         products = get_sales_from_one_page(page, store)
 
         for product in products:
-
             price_reg_min = product.get('current_prices').get('price_reg__min')
             price_promo_min = product.get('current_prices').get('price_promo__min')
             percent_sale = round(100 - price_promo_min / price_reg_min * 100, 2)
@@ -78,7 +77,8 @@ def get_all_sales_from_all_pages(filename, store):
 
             with sqlite3.connect(filename) as con:
                 cur = con.cursor()
-                cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (product_after_process,))
+                cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                (product_after_process,))
 
         received_sales_len += len(products)
 
@@ -88,4 +88,14 @@ def get_all_sales_from_all_pages(filename, store):
             last_length = received_sales_len
 
 
+def best_sales(filename):
+    with sqlite3.connect(filename) as con:
+        cur = con.cursor()
+        return tuple(cur.execute("""SELECT * FROM sales ORDER BY percent_sale DESC"""))
+
+
+def low_prices(filename):
+    with sqlite3.connect(filename) as con:
+        cur = con.cursor()
+        return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))
 
