@@ -7,7 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.reply import pyaterochka_menu
-from tgbot.misc.get_sales import get_all_sales_from_all_pages_5ka, best_sales_5ka, low_prices_5ka, generate_text
+from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka, best_sales_5ka, low_prices_5ka, generate_text
 from tgbot.misc.states import Stages
 
 
