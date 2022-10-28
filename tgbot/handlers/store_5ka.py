@@ -7,7 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.reply import pyaterochka_menu
-from tgbot.misc.get_sales import get_all_sales_from_all_pages, best_sales, low_prices, generate_text
+from tgbot.misc.get_sales import get_all_sales_from_all_pages_5ka, best_sales_5ka, low_prices_5ka, generate_text
 from tgbot.misc.states import Stages
 
 
@@ -20,7 +20,7 @@ def register_pyaterochka(dp: Dispatcher):
     dp.register_message_handler(pyaterochka, text='Пятёрочка')
 
 
-async def show_sales(message: Message, state: FSMContext):
+async def show_sales_5ka(message: Message, state: FSMContext):
     data = await state.get_data()
     store = data.get('city_code')
     if store is None:
@@ -32,14 +32,14 @@ async def show_sales(message: Message, state: FSMContext):
     creating_db_message = None
     if not os.path.exists(filename):
         creating_db_message = await message.answer(text='Создаём базу данных. Обычно это занимает не более 30 секунд.')
-        get_all_sales_from_all_pages(filename=filename, store=store)
+        get_all_sales_from_all_pages_5ka(filename=filename, store=store)
 
     if creating_db_message:
         await creating_db_message.delete()
 
     result_text = ''
     if message.text == 'Лучшие скидки':
-        sales = best_sales(filename=filename)
+        sales = best_sales_5ka(filename=filename)
         result_text += f'Самые большие скидки (первые 10): \n\n'
         result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
@@ -47,7 +47,7 @@ async def show_sales(message: Message, state: FSMContext):
 
     elif message.text == 'Низкие цены':
         result_text += 'Самые низкие цены (первые 10): \n\n'
-        sales = low_prices(filename)
+        sales = low_prices_5ka(filename)
         result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
 
@@ -55,7 +55,7 @@ async def show_sales(message: Message, state: FSMContext):
 
 
 def register_show_sales(dp: Dispatcher):
-    dp.register_message_handler(show_sales, text=['Лучшие скидки', 'Низкие цены'], state=Stages.pyaterochka)
+    dp.register_message_handler(show_sales_5ka, text=['Лучшие скидки', 'Низкие цены'], state=Stages.pyaterochka)
 
 
 def register_all_stores(dp):

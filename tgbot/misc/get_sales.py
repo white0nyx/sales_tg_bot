@@ -6,7 +6,7 @@ def get_stores():
     pass
 
 
-def get_sales_from_one_page(page, store):
+def get_sales_from_one_page_5ka(page, store):
     headers = {
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -38,7 +38,7 @@ def get_sales_from_one_page(page, store):
     return response.json()['results']
 
 
-def get_all_sales_from_all_pages(filename, store):
+def get_all_sales_from_all_pages_5ka(filename, store):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -57,7 +57,7 @@ def get_all_sales_from_all_pages(filename, store):
     received_sales_len = 0
     last_length = 0
     for page in range(1, 1000 + 1):
-        products = get_sales_from_one_page(page, store)
+        products = get_sales_from_one_page_5ka(page, store)
 
         for product in products:
             price_reg_min = product.get('current_prices').get('price_reg__min')
@@ -88,13 +88,13 @@ def get_all_sales_from_all_pages(filename, store):
             last_length = received_sales_len
 
 
-def best_sales(filename):
+def best_sales_5ka(filename):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY percent_sale DESC"""))
 
 
-def low_prices(filename):
+def low_prices_5ka(filename):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))

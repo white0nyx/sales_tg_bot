@@ -10,7 +10,7 @@ from tgbot.config import load_config
 from tgbot.handlers.about_bot import register_about_bot
 from tgbot.handlers.set_city import register_all_set_city
 from tgbot.handlers.start import register_start
-from tgbot.handlers.stores import register_all_stores
+from tgbot.handlers.store_5ka import register_all_stores
 
 logger = logging.getLogger(__name__)
 
