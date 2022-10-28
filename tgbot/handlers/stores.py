@@ -7,7 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.reply import pyaterochka_menu
-from tgbot.misc.get_sales import get_all_sales_from_all_pages, best_sales, low_prices
+from tgbot.misc.get_sales import get_all_sales_from_all_pages, best_sales, low_prices, generate_text
 from tgbot.misc.states import Stages
 
 
@@ -39,18 +39,16 @@ async def show_sales(message: Message, state: FSMContext):
 
     result_text = ''
     if message.text == 'Лучшие скидки':
-        result_text += 'Самые большие скидки (первые 10): \n\n'
         sales = best_sales(filename=filename)
-        for sale in sales[:10]:
-            result_text += f'🔸 {sale[1]} |\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
+        result_text += f'Самые большие скидки (первые 10): \n\n'
+        result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
         # Добавить inline кнопки: 1. Вывести остальные 2. Показывать по одному
 
     elif message.text == 'Низкие цены':
         result_text += 'Самые низкие цены (первые 10): \n\n'
         sales = low_prices(filename)
-        for sale in sales[:10]:
-            result_text += f'🔸 {sale[1]} |\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
+        result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
 
     await state.reset_state(with_data=False)
