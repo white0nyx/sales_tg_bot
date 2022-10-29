@@ -11,7 +11,7 @@ from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka, best
 from tgbot.misc.states import Stages
 
 
-async def pyaterochka(message: Message, state: FSMContext):
+async def pyaterochka(message: Message):
     await message.answer('Сделайте выбор', reply_markup=pyaterochka_menu)
     await Stages.pyaterochka.set()
 
@@ -23,11 +23,16 @@ def register_pyaterochka(dp: Dispatcher):
 async def show_sales_5ka(message: Message, state: FSMContext):
     data = await state.get_data()
     store = data.get('city_code')
+    city_short_name = data.get('city_short_name')
+
     if store is None:
         store = '34ID'
 
+    if city_short_name is None:
+        city_short_name = 'RND'
+
     today = datetime.datetime.now().strftime("%d%m%y")
-    filename = f'data/{store}_{today}.db'
+    filename = f'data/P_{city_short_name}_{store}_{today}.db'
 
     creating_db_message = None
     if not os.path.exists(filename):

@@ -25,16 +25,15 @@ def register_set_city(dp: Dispatcher):
 async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContext):
     city_name = callback_data.get('city_name')
     city_code = callback_data.get('city_code')
+    city_short_name = callback_data.get('city_short_name')
     await call.answer(text=f'Город {city_name} успешно сохранён')
 
     async with state.proxy() as data:
         data['city_name'] = city_name
         data['city_code'] = city_code
+        data['city_short_name'] = city_short_name
 
-    data = await state.get_data()
-    cn = data.get('city_name')
-    cc = data.get('city_code')
-    await call.message.answer(f'Выбранный город {cn} успешно сохранён. Код магазина: {cc}\n'
+    await call.message.answer(f'Выбранный город {city_name} успешно сохранён. Код магазина: {city_code}\n'
                               f'Для изменения города воспользуйтесь командой /set_city')
     await call.message.delete()
 
