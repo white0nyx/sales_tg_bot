@@ -102,7 +102,13 @@ def low_prices_5ka(filename):
 
 def generate_text(sales: tuple):
     text = ''
-    for sale in sales[:10]:
-        text += f'🔸 {sale[1]} |\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
 
+    figures = {0: '🔸',
+               1: '🔹'}
+
+    counter = 0
+    for sale in sales[:10]:
+        text += f'{figures.get(counter % 2)} {sale[1]} |\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
+        counter += 1
+        
     return text
