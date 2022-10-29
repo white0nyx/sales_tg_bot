@@ -63,10 +63,7 @@ venv.bak/
 .env
 
 # Databases
-S801*.db
-5599*.db
-308R*.db
-34ID*.db
+P_*.db
 
 # Test files
 test*.py
