@@ -64,6 +64,7 @@ venv.bak/
 
 # Databases
 P_*.db
+M_*.db
 
 # Test files
 test*.py
