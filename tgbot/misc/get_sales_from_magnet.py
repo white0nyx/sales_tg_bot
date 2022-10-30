@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import sqlite3
 
 
-def get_sales_from_one_page_magnet(city_code, filename):
+def get_sales_from_one_page_magnet(filename, store):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -38,10 +38,9 @@ def get_sales_from_one_page_magnet(city_code, filename):
     }
 
     cookies = {
-        'mg_geo_id': f'{city_code}'
+        'mg_geo_id': f'{store}'
     }
 
-    skip = 0
     collected = 0
     count_discounts = None
     for page in range(1, 10_000):
@@ -108,4 +107,4 @@ def get_sales_from_one_page_magnet(city_code, filename):
 
 
 if __name__ == '__main__':
-    get_sales_from_one_page_magnet(city_code=1761, filename='test.db')
+    get_sales_from_one_page_magnet(store=1761, filename='test.db')

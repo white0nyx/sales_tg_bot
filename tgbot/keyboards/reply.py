@@ -16,3 +16,13 @@ pyaterochka_menu = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton('Низкие цены')
     ]
 ], resize_keyboard=True)
+
+
+magnet_menu = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton('Лучшие скидки')
+    ],
+    [
+        KeyboardButton('Низкие цены')
+    ]
+], resize_keyboard=True)
