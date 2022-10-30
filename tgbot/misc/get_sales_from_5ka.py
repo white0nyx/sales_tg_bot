@@ -88,13 +88,13 @@ def get_all_sales_from_all_pages_5ka(filename, store):
             last_length = received_sales_len
 
 
-def best_sales_5ka(filename):
+def best_sales(filename):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY percent_sale DESC"""))
 
 
-def low_prices_5ka(filename):
+def low_prices(filename):
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))
@@ -108,7 +108,7 @@ def generate_text(sales: tuple):
 
     counter = 0
     for sale in sales[:10]:
-        text += f'{figures.get(counter % 2)} {sale[1]} |\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
+        text += f'{figures.get(counter % 2)} {sale[1]}\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
         counter += 1
         
     return text
