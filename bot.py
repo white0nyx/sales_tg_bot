@@ -10,7 +10,7 @@ from tgbot.config import load_config
 from tgbot.handlers.about_bot import register_about_bot
 from tgbot.handlers.set_city import register_all_set_city
 from tgbot.handlers.start import register_start
-from tgbot.handlers.store_5ka import register_all_stores
+from tgbot.handlers.store_5ka import register_all_pyaterochka
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ def register_all_handlers(dp):
     register_start(dp)
     register_all_set_city(dp)
     register_about_bot(dp)
-    register_all_stores(dp)
+    register_all_pyaterochka(dp)
 
 
 async def main():

@@ -1,6 +1,5 @@
 import datetime
 import os
-import sqlite3
 
 from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
@@ -22,7 +21,7 @@ def register_pyaterochka(dp: Dispatcher):
 
 async def show_sales_5ka(message: Message, state: FSMContext):
     data = await state.get_data()
-    store = data.get('city_code')
+    store = data.get('pyaterochka_code')
     city_short_name = data.get('city_short_name')
 
     if store is None:
@@ -63,6 +62,6 @@ def register_show_sales(dp: Dispatcher):
     dp.register_message_handler(show_sales_5ka, text=['Лучшие скидки', 'Низкие цены'], state=Stages.pyaterochka)
 
 
-def register_all_stores(dp):
+def register_all_pyaterochka(dp):
     register_pyaterochka(dp)
     register_show_sales(dp)
