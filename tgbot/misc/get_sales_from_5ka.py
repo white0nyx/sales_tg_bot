@@ -4,10 +4,6 @@ import sqlite3
 from bs4 import BeautifulSoup
 
 
-def get_stores():
-    pass
-
-
 def get_sales_from_one_page_5ka(page, store):
     headers = {
         'Accept': 'application/json, text/plain, */*',
@@ -41,21 +37,6 @@ def get_sales_from_one_page_5ka(page, store):
 
 
 def get_all_sales_from_all_pages_5ka(filename, store):
-    months = {
-        '01': 'января',
-        '02': 'февраля',
-        '03': 'марта',
-        '04': 'апреля',
-        '05': 'мая',
-        '06': 'июня',
-        '07': 'июля',
-        '08': 'августа',
-        '09': 'сентября',
-        '10': 'октября',
-        '11': 'ноября',
-        '12': 'декабря',
-    }
-
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -63,12 +44,11 @@ def get_all_sales_from_all_pages_5ka(filename, store):
         id INTEGER,
         name TEXT,
         img_link TEXT,
-        promo_id INTEGER,
         date_begin TEXT,
         date_end TEXT,
         price_reg_min REAL,
         price_promo_min REAL,
-        percent_sale REAL,
+        percent_sale INTEGER,
         store_name TEXT)""")
 
     received_sales_len = 0
@@ -79,22 +59,14 @@ def get_all_sales_from_all_pages_5ka(filename, store):
         for product in products:
             price_reg_min = product.get('current_prices').get('price_reg__min')
             price_promo_min = product.get('current_prices').get('price_promo__min')
-            percent_sale = round(100 - price_promo_min / price_reg_min * 100, 2)
+            percent_sale = int(100 - price_promo_min / price_reg_min * 100)
 
-            date_end = product.get('promo').get('date_end')
-
-            if 'до' not in date_end:
-                date_end = date_end.split('-')
-                day = date_end[-1]
-                if day[0] == '0':
-                    day = day[1:]
-                date_end = f'до {day} {months.get(date_end[1])}'
-
+            date_begin = reformat_date(product.get('promo').get('date_begin'), is_begin=True)
+            date_end = reformat_date(product.get('promo').get('date_end'), is_begin=False)
             product_after_process = (product.get('id'),
                                      product.get('name'),
                                      product.get('img_link'),
-                                     product.get('promo').get('id'),
-                                     product.get('promo').get('date_begin'),
+                                     date_begin,
                                      date_end,
                                      price_reg_min,
                                      price_promo_min,
@@ -103,7 +75,7 @@ def get_all_sales_from_all_pages_5ka(filename, store):
 
             with sqlite3.connect(filename) as con:
                 cur = con.cursor()
-                cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                 (product_after_process,))
 
         received_sales_len += len(products)
@@ -171,16 +143,43 @@ def generate_text(sales: tuple):
     for sale in sales[:10]:
         figure = figures.get(counter % 2)
         name = sale[1]
-        percent = sale[8]
-        old_price = sale[6]
-        new_price = sale[7]
-        date_end = sale[5]
+        percent = sale[7]
+        old_price = sale[5]
+        new_price = sale[6]
+        date_end = sale[4]
 
-        text += f'{figure} {name}\n {percent}% | <s>{old_price}</s> ➡ <b>{new_price} руб.</b>\n{date_end}\n\n'
+        text += f'{figure} {name}\n {percent}% <b>|</b> <s>{old_price}</s> ➡ <b>{new_price} руб.</b>\n{date_end}\n\n'
         counter += 1
 
     return text
 
 
+def reformat_date(date, is_begin):
+    months = {
+        '01': 'января',
+        '02': 'февраля',
+        '03': 'марта',
+        '04': 'апреля',
+        '05': 'мая',
+        '06': 'июня',
+        '07': 'июля',
+        '08': 'августа',
+        '09': 'сентября',
+        '10': 'октября',
+        '11': 'ноября',
+        '12': 'декабря',
+    }
+
+    date_end = date.split('-')
+    day = date_end[-1]
+
+    if day[0] == '0':
+        day = day[1:]
+
+    prefix = 'с' if is_begin else 'до'
+
+    return f'{prefix} {day} {months.get(date_end[1])}'
+
+
 if __name__ == '__main__':
-    check_5ka_store_code('34IDS')
+    print(reformat_date('12-12-22', is_begin=False))

@@ -11,12 +11,11 @@ def get_sales_from_one_page_magnet(filename, store):
         id INTEGER,
         name TEXT,
         img_link TEXT,
-        promo_id INTEGER,
         date_begin TEXT,
         date_end TEXT,
         price_reg_min REAL,
         price_promo_min REAL,
-        percent_sale REAL,
+        percent_sale INTEGER,
         store_name TEXT)""")
 
     headers = {
@@ -87,7 +86,6 @@ def get_sales_from_one_page_magnet(filename, store):
                 product_after_process = ('NULL',
                                          name,
                                          img_link,
-                                         'NULL',
                                          date_begin,
                                          date_end,
                                          price_reg_min,
@@ -97,7 +95,7 @@ def get_sales_from_one_page_magnet(filename, store):
 
                 with sqlite3.connect(filename) as con:
                     cur = con.cursor()
-                    cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    cur.executemany(f"""INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (product_after_process,))
 
                 collected += 1

@@ -67,12 +67,12 @@ async def show_sales(message: Message, state: FSMContext):
     result_text = ''
     if message.text == 'Лучшие скидки':
         sales = best_sales(filename=filename)
-        result_text += f'Самые большие скидки (первые 10): \n\n'
+        result_text += f'🔥 <b>Топ 10 самых больших скидок</b> \n\n'
         result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=choice_company)
 
     elif message.text == 'Низкие цены':
-        result_text += 'Самые низкие цены (первые 10): \n\n'
+        result_text += '🔥 <b>Топ 10 самых дешёвых товаров</b> \n\n'
         sales = low_prices(filename)
         result_text += generate_text(sales)
         await message.answer(text=result_text, reply_markup=choice_company)
