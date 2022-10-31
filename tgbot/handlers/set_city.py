@@ -5,6 +5,7 @@ from aiogram.types import Message, CallbackQuery
 
 from tgbot.keyboards.callback_datas import city_callback
 from tgbot.keyboards.inline import cities_choice
+from tgbot.keyboards.reply import choice_company
 
 
 async def menu_set_city(message: Message, state: FSMContext):
@@ -38,7 +39,8 @@ async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContex
     await call.message.answer(f'Выбранный город {city_name} успешно сохранён.\n\n'
                               f'Код пятёрочки: {pyaterochka_code}\n'
                               f'Код магнита: {magnet_code}\n\n'
-                              f'Для изменения города воспользуйтесь командой /set_city')
+                              f'Для изменения города воспользуйтесь командой /set_city',
+                              reply_markup=choice_company)
     await call.message.delete()
 
 
