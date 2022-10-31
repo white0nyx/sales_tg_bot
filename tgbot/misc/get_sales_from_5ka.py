@@ -41,6 +41,21 @@ def get_sales_from_one_page_5ka(page, store):
 
 
 def get_all_sales_from_all_pages_5ka(filename, store):
+    months = {
+        '01': 'января',
+        '02': 'февраля',
+        '03': 'марта',
+        '04': 'апреля',
+        '05': 'мая',
+        '06': 'июня',
+        '07': 'июля',
+        '08': 'августа',
+        '09': 'сентября',
+        '10': 'октября',
+        '11': 'ноября',
+        '12': 'декабря',
+    }
+
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -66,12 +81,21 @@ def get_all_sales_from_all_pages_5ka(filename, store):
             price_promo_min = product.get('current_prices').get('price_promo__min')
             percent_sale = round(100 - price_promo_min / price_reg_min * 100, 2)
 
+            date_end = product.get('promo').get('date_end')
+
+            if 'до' not in date_end:
+                date_end = date_end.split('-')
+                day = date_end[-1]
+                if day[0] == '0':
+                    day = day[1:]
+                date_end = f'до {day} {months.get(date_end[1])}'
+
             product_after_process = (product.get('id'),
                                      product.get('name'),
                                      product.get('img_link'),
                                      product.get('promo').get('id'),
                                      product.get('promo').get('date_begin'),
-                                     product.get('promo').get('date_end'),
+                                     date_end,
                                      price_reg_min,
                                      price_promo_min,
                                      percent_sale,
@@ -145,7 +169,14 @@ def generate_text(sales: tuple):
 
     counter = 0
     for sale in sales[:10]:
-        text += f'{figures.get(counter % 2)} {sale[1]}\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
+        figure = figures.get(counter % 2)
+        name = sale[1]
+        percent = sale[8]
+        old_price = sale[6]
+        new_price = sale[7]
+        date_end = sale[5]
+
+        text += f'{figure} {name}\n {percent}% | <s>{old_price}</s> ➡ <b>{new_price} руб.</b>\n{date_end}\n\n'
         counter += 1
 
     return text
