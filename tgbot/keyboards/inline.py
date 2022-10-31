@@ -26,3 +26,11 @@ cities_choice = InlineKeyboardMarkup(inline_keyboard=[
                                                                                     city_short_name='RND'))
     ]
 ])
+
+
+yes_no_buttons = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text='Да', callback_data='yes'),
+        InlineKeyboardButton(text='Нет', callback_data='no')
+    ]
+])

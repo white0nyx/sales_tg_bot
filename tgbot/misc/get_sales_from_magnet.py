@@ -101,10 +101,47 @@ def get_sales_from_one_page_magnet(filename, store):
                                     (product_after_process,))
 
                 collected += 1
-            # AttributeError,
+
             except AttributeError:
                 pass
 
 
+def check_magnet_city_code(city_code):
+    headers = {
+        'Accept': '*/*',
+        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'DNT': '1',
+        'Origin': 'https://magnit.ru',
+        'Referer': 'https://magnit.ru/',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36',
+        'X-Requested-With': 'XMLHttpRequest',
+        'sec-ch-ua': '"Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+    }
+
+    cookies = {
+        'mg_geo_id': f'{city_code}'
+    }
+
+    data = {
+        'page': '1',
+    }
+
+    response = requests.post('https://magnit.ru/promo/', cookies=cookies, headers=headers, data=data)
+
+    if 'TypeError' in response.text:
+        return None
+
+    soup = BeautifulSoup(response.text, 'lxml')
+    city = soup.find('span', class_='header__contacts-text').text
+    return city
+
+
 if __name__ == '__main__':
-    get_sales_from_one_page_magnet(store=1761, filename='test.db')
+    print(check_magnet_city_code('1398'))

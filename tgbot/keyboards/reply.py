@@ -26,3 +26,10 @@ magnet_menu = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton('Низкие цены')
     ]
 ], resize_keyboard=True)
+
+
+cancel_button = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton('Отмена')
+    ]
+], resize_keyboard=True)
