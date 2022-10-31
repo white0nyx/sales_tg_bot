@@ -1,6 +1,8 @@
 import requests
 import sqlite3
 
+from bs4 import BeautifulSoup
+
 
 def get_stores():
     pass
@@ -100,6 +102,41 @@ def low_prices(filename):
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))
 
 
+def check_5ka_store_code(store_code):
+    headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Connection': 'keep-alive',
+        'DNT': '1',
+        'Referer': 'https://5ka.ru/special_offers',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36',
+        'sec-ch-ua': '"Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+    }
+
+    params = {
+        'records_per_page': '20',
+        'page': '1',
+        'store': store_code,
+        'ordering': '',
+        'price_promo__gte': '',
+        'price_promo__lte': '',
+        'categories': '',
+        'search': '',
+    }
+
+    response = requests.get('https://5ka.ru/api/v2/special_offers/', params=params, headers=headers)
+
+    city = None
+    if response.text.startswith('{'):
+        city = response.json().get('store_address')
+    return city
+
+
 def generate_text(sales: tuple):
     text = ''
 
@@ -110,5 +147,9 @@ def generate_text(sales: tuple):
     for sale in sales[:10]:
         text += f'{figures.get(counter % 2)} {sale[1]}\n {sale[8]}% | <s>{sale[6]}</s> ➡ <b>{sale[7]} руб.</b>\n\n'
         counter += 1
-        
+
     return text
+
+
+if __name__ == '__main__':
+    check_5ka_store_code('34IDS')

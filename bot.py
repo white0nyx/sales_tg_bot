@@ -7,8 +7,10 @@ from aiogram.types import BotCommand
 
 from tgbot.config import load_config
 from tgbot.handlers.about_bot import register_about_bot
+from tgbot.handlers.cancel import register_cancel
+from tgbot.handlers.set_5ka_store import register_all_set_5k_store
 from tgbot.handlers.set_city import register_all_set_city
-from tgbot.handlers.set_magnet_city import register_all_set_magnet_store, register_cancel
+from tgbot.handlers.set_magnet_city import register_all_set_magnet_city
 from tgbot.handlers.start import register_start
 from tgbot.handlers.stores import register_all_store
 
@@ -28,7 +30,9 @@ def register_all_handlers(dp):
     register_all_set_city(dp)
     register_about_bot(dp)
     register_all_store(dp)
-    register_all_set_magnet_store(dp)
+    register_cancel(dp)
+    register_all_set_magnet_city(dp)
+    register_all_set_5k_store(dp)
 
 
 async def main():
@@ -52,6 +56,7 @@ async def main():
     await dp.bot.set_my_commands([BotCommand('start', 'Запустить бота'),
                                   BotCommand('set_city', 'Выбрать город'),
                                   BotCommand('set_magnet_city', 'Установить конкретный магазин Магнита'),
+                                  BotCommand('set_5ka_store', 'Установить конкретный магазин Пятёрочки'),
                                   BotCommand('about_bot', 'Информация о боте')])
 
     # start
