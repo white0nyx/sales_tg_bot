@@ -4,7 +4,7 @@ from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
-from tgbot.keyboards.reply import magnet_menu
+from tgbot.keyboards.reply import magnet_menu, choice_company
 from tgbot.misc.get_sales_from_5ka import best_sales, generate_text, low_prices, \
     get_all_sales_from_all_pages_5ka
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
@@ -69,13 +69,13 @@ async def show_sales(message: Message, state: FSMContext):
         sales = best_sales(filename=filename)
         result_text += f'Самые большие скидки (первые 10): \n\n'
         result_text += generate_text(sales)
-        await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
+        await message.answer(text=result_text, reply_markup=choice_company)
 
     elif message.text == 'Низкие цены':
         result_text += 'Самые низкие цены (первые 10): \n\n'
         sales = low_prices(filename)
         result_text += generate_text(sales)
-        await message.answer(text=result_text, reply_markup=ReplyKeyboardRemove())
+        await message.answer(text=result_text, reply_markup=choice_company)
 
     await state.reset_state(with_data=False)
 
