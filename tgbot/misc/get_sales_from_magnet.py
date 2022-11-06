@@ -64,7 +64,7 @@ def get_sales_from_one_page_magnet(filename, store):
                     continue
 
                 name = texts[2].text.strip()
-                part_of_link = product.find("img").get('data-src')
+                part_of_link = product.find("img").get('data-src').strip()
                 img_link = f'https://magnit.ru{part_of_link}'
                 date_begin, date_end = product.find_all('div')[-2].text.strip().split('\n')
                 date_end = date_end.replace('  ', ' ')

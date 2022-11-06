@@ -64,14 +64,14 @@ def get_all_sales_from_all_pages_5ka(filename, store):
             date_begin = reformat_date(product.get('promo').get('date_begin'), is_begin=True)
             date_end = reformat_date(product.get('promo').get('date_end'), is_begin=False)
             product_after_process = (product.get('id'),
-                                     product.get('name'),
-                                     product.get('img_link'),
-                                     date_begin,
-                                     date_end,
+                                     product.get('name').strip(),
+                                     product.get('img_link').strip(),
+                                     date_begin.strip(),
+                                     date_end.strip(),
                                      price_reg_min,
                                      price_promo_min,
                                      percent_sale,
-                                     product.get('store_name'))
+                                     product.get('store_name').strip())
 
             with sqlite3.connect(filename) as con:
                 cur = con.cursor()
@@ -148,7 +148,7 @@ def generate_text(sales: tuple):
         new_price = sale[6]
         date_end = sale[4]
 
-        text += f'{figure} {name}\n {percent}% <b>|</b> <s>{old_price}</s> ➡ <b>{new_price} руб.</b>\n{date_end}\n\n'
+        text += f'{figure} {name}\n{percent}% <b>|</b> <s>{old_price}</s> ➡ <b>{new_price} руб.</b>\n{date_end}\n\n'
         counter += 1
 
     return text
