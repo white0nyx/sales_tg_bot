@@ -58,7 +58,8 @@ async def show_sales(message: Message, state: FSMContext):
     creating_db_message = None
     if not os.path.exists(filename):
         creating_db_message = await message.answer(
-            text=f'Создаём базу данных. Обычно это занимает не более {waiting_time}.')
+            text=f'Создаём базу данных. Обычно это занимает не более {waiting_time}.',
+            reply_markup=ReplyKeyboardRemove())
         get_sales_func(filename=filename, store=store_code)
 
     if creating_db_message:

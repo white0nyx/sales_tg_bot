@@ -37,8 +37,6 @@ async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContex
         data['city_short_name'] = city_short_name
 
     await call.message.answer(f'Выбранный город {city_name} успешно сохранён.\n\n'
-                              f'Код пятёрочки: {pyaterochka_code}\n'
-                              f'Код магнита: {magnet_code}\n\n'
                               f'Для изменения города воспользуйтесь командой /set_city',
                               reply_markup=choice_company)
     await call.message.delete()
