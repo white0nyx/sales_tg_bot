@@ -133,14 +133,14 @@ def check_5ka_store_code(store_code):
     return city
 
 
-def generate_text(sales: tuple):
+def generate_text(sales: tuple, count_sales):
     text = ''
 
     figures = {0: '🔸',
                1: '🔹'}
 
     counter = 0
-    for sale in sales[:10]:
+    for sale in sales[:count_sales]:
         figure = figures.get(counter % 2)
         name = sale[1]
         percent = sale[7]

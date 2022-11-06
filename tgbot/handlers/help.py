@@ -11,7 +11,8 @@ async def help_command(message: Message):
                          '(прилагается инструкция)\n\n'
                          '/set_5ka_store - установить собственный магазин для магазина Пятёрочка по его коду\n'
                          '(прилагается инструкция)\n\n'
-                         '/about_bot - получить информацию о боте')
+                         '/set_count_sales - установить количество выводимых скидок за раз\n\n'
+                         '/about_bot - получить информацию о боте\n\n')
 
 
 def register_help_command(dp: Dispatcher):

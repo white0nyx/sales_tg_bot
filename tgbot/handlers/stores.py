@@ -48,12 +48,16 @@ async def show_sales(message: Message, state: FSMContext):
         get_sales_func = get_all_sales_from_all_pages_5ka
 
     city_short_name = data.get('city_short_name')
-
     if city_short_name is None:
         city_short_name = 'RND'
 
     today = datetime.datetime.now().strftime("%d%m%y")
     filename = f'data/{store_letter}_{city_short_name}_{store_code}_{today}.db'
+
+    count_sales = data.get('count_sales')
+
+    if count_sales is None:
+        count_sales = 10
 
     creating_db_message = None
     if not os.path.exists(filename):
@@ -68,14 +72,14 @@ async def show_sales(message: Message, state: FSMContext):
     result_text = ''
     if message.text == 'Лучшие скидки':
         sales = best_sales(filename=filename)
-        result_text += f'🔥 <b>Топ 10 самых больших скидок</b> \n\n'
-        result_text += generate_text(sales)
+        result_text += f'🔥 <b>Топ {count_sales} самых больших скидок</b> \n\n'
+        result_text += generate_text(sales, count_sales)
         await message.answer(text=result_text, reply_markup=choice_company)
 
     elif message.text == 'Низкие цены':
-        result_text += '🔥 <b>Топ 10 самых дешёвых товаров</b> \n\n'
+        result_text += f'🔥 <b>Топ {count_sales} самых дешёвых товаров</b> \n\n'
         sales = low_prices(filename)
-        result_text += generate_text(sales)
+        result_text += generate_text(sales, count_sales)
         await message.answer(text=result_text, reply_markup=choice_company)
 
     await state.reset_state(with_data=False)

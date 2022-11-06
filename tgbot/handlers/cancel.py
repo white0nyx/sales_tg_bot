@@ -14,4 +14,4 @@ async def cancel(message: Message, state: FSMContext):
 def register_cancel(dp: Dispatcher):
     dp.register_message_handler(callback=cancel,
                                 text='Отмена',
-                                state=[Stages.set_magnet_city, Stages.set_5k_store])
+                                state=[Stages.set_magnet_city, Stages.set_5k_store, Stages.set_count_sales])

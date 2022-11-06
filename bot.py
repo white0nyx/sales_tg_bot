@@ -11,6 +11,7 @@ from tgbot.handlers.cancel import register_cancel
 from tgbot.handlers.help import register_help_command
 from tgbot.handlers.set_5ka_store import register_all_set_5k_store
 from tgbot.handlers.set_city import register_all_set_city
+from tgbot.handlers.set_count_sales import register_all_set_count_sales
 from tgbot.handlers.set_magnet_city import register_all_set_magnet_city
 from tgbot.handlers.start import register_start
 from tgbot.handlers.stores import register_all_store
@@ -29,6 +30,7 @@ def register_all_filters(dp):
 def register_all_handlers(dp):
     register_start(dp)
     register_help_command(dp)
+    register_all_set_count_sales(dp)
     register_all_set_city(dp)
     register_about_bot(dp)
     register_all_store(dp)
@@ -60,6 +62,7 @@ async def main():
                                   BotCommand('set_city', 'Выбрать город'),
                                   BotCommand('set_magnet_city', 'Установить конкретный магазин Магнита'),
                                   BotCommand('set_5ka_store', 'Установить конкретный магазин Пятёрочки'),
+                                  BotCommand('set_count_sales', 'Установить выводимых скидок за раз'),
                                   BotCommand('about_bot', 'Информация о боте')])
 
     # start
