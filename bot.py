@@ -62,7 +62,7 @@ async def main():
                                   BotCommand('set_city', 'Выбрать город'),
                                   BotCommand('set_magnet_city', 'Установить конкретный магазин Магнита'),
                                   BotCommand('set_5ka_store', 'Установить конкретный магазин Пятёрочки'),
-                                  BotCommand('set_count_sales', 'Установить выводимых скидок за раз'),
+                                  BotCommand('set_count_sales', 'Установить количество выводимых скидок за раз'),
                                   BotCommand('about_bot', 'Информация о боте')])
 
     # start
