@@ -6,13 +6,13 @@ from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.reply import magnet_menu, choice_company
 from tgbot.misc.get_sales_from_5ka import best_sales, generate_text, low_prices, \
-    get_all_sales_from_all_pages_5ka
+    get_all_sales_from_all_pages_5ka, search_by_text
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
 from tgbot.misc.states import Stages
 
 
 async def store(message: Message):
-    await message.answer('Сделайте выбор', reply_markup=magnet_menu)
+    await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=magnet_menu)
     if message.text == 'Магнит':
         await Stages.magnet.set()
 
@@ -74,20 +74,26 @@ async def show_sales(message: Message, state: FSMContext):
         sales = best_sales(filename=filename)
         result_text += f'🔥 <b>Топ {count_sales} самых больших скидок</b> \n\n'
         result_text += generate_text(sales, count_sales)
-        await message.answer(text=result_text, reply_markup=choice_company)
 
     elif message.text == 'Низкие цены':
         result_text += f'🔥 <b>Топ {count_sales} самых дешёвых товаров</b> \n\n'
         sales = low_prices(filename)
         result_text += generate_text(sales, count_sales)
-        await message.answer(text=result_text, reply_markup=choice_company)
 
+    else:
+        sales = search_by_text(filename=filename, request=message.text)
+        if len(sales) == 0:
+            result_text = 'По вашему запросу скидок не обнаружено'
+        else:
+            result_text += f'🔥 <b>По вашему запросу обнаружено {len(sales)} скидок</b>\n\n'
+            result_text += generate_text(sales, count_sales)
+
+    await message.answer(text=result_text, reply_markup=choice_company)
     await state.reset_state(with_data=False)
 
 
 def register_show_sales(dp: Dispatcher):
     dp.register_message_handler(callback=show_sales,
-                                text=['Лучшие скидки', 'Низкие цены'],
                                 state=[Stages.magnet, Stages.pyaterochka])
 
 

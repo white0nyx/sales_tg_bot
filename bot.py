@@ -29,12 +29,12 @@ def register_all_filters(dp):
 
 def register_all_handlers(dp):
     register_start(dp)
+    register_cancel(dp)
     register_help_command(dp)
     register_all_set_count_sales(dp)
     register_all_set_city(dp)
     register_about_bot(dp)
     register_all_store(dp)
-    register_cancel(dp)
     register_all_set_magnet_city(dp)
     register_all_set_5k_store(dp)
 

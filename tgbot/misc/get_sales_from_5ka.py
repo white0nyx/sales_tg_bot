@@ -98,6 +98,18 @@ def low_prices(filename):
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))
 
 
+def search_by_text(filename, request: str):
+    request_lower = request.lower()
+    request_upper = request.upper()
+    request_title = request.title()
+
+    with sqlite3.connect(filename) as con:
+        cur = con.cursor()
+        return tuple(cur.execute(f"""SELECT * FROM sales
+        WHERE (name LIKE '%{request} %') or (name LIKE '%{request_lower} %') or (name LIKE '%{request_title} %') or (name LIKE '%{request_upper} %')
+        ORDER BY percent_sale DESC"""))
+
+
 def check_5ka_store_code(store_code):
     headers = {
         'Accept': 'application/json, text/plain, */*',
