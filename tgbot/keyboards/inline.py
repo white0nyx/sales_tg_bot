@@ -70,3 +70,10 @@ def get_page_keyboard(max_pages: int, key: str, page: int = 1):
         )
 
     return markup
+
+
+magnet_instruction = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text='Инструкция', url='https://www.notion.so/ab6bca8ca72e44c0969c0e61166d8e72')
+    ]
+])
