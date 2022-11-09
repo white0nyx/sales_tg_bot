@@ -29,14 +29,12 @@ async def show_sales(message: Message, state: FSMContext):
 
     store_code = None
     store_letter = None
-    waiting_time = None
     get_sales_func = None
     if await state.get_state() == Stages.magnet.state:
         store_code = data.get('magnet_code')
         if store_code is None:
             store_code = '1452'
         store_letter = 'M'
-        waiting_time = '2 минут'
         get_sales_func = get_sales_from_one_page_magnet
 
     elif await state.get_state() == Stages.pyaterochka.state:
@@ -44,7 +42,6 @@ async def show_sales(message: Message, state: FSMContext):
         if store_code is None:
             store_code = '34ID'
         store_letter = 'P'
-        waiting_time = '30 секунд'
         get_sales_func = get_all_sales_from_all_pages_5ka
 
     city_short_name = data.get('city_short_name')
@@ -62,7 +59,7 @@ async def show_sales(message: Message, state: FSMContext):
     creating_db_message = None
     if not os.path.exists(filename):
         creating_db_message = await message.answer(
-            text=f'Создаём базу данных. Обычно это занимает не более {waiting_time}.',
+            text=f'Создаём базу данных. Это может занять несколько минут.',
             reply_markup=ReplyKeyboardRemove())
         get_sales_func(filename=filename, store=store_code)
 
