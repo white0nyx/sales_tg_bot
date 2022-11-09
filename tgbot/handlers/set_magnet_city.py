@@ -26,7 +26,6 @@ async def check_magnet_city(message: Message, state: FSMContext):
     if city is None:
         await message.answer(f'Город с кодом {city_code} не обнаружен, проверьте правильность введённых данных.',
                              reply_markup=cancel_button)
-        await message.answer('Если вы столкнулись с трудностями пишите сюда: ')
 
     else:
         async with state.proxy() as data:
