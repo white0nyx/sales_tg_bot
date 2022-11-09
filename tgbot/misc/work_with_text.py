@@ -71,3 +71,30 @@ def generate_text(sales: tuple, count_sales):
         counter += 1
 
     return text
+
+
+def split_into_pages(sales: tuple, step: int) -> list:
+    # print(*sales, sep='\n')
+    # print('########################################################')
+    pages = []
+    page_number = 0
+    last_element_index = 0
+    for i in range(step, len(sales)+step, step):
+        page_number += 1
+        title = f'Страница {page_number}\n'
+        main_text = generate_text(sales[last_element_index:i], step)
+
+        pages.append(title + main_text)
+        last_element_index = i
+
+    print(pages)
+    return pages
+
+
+if __name__ == '__main__':
+
+    with sqlite3.connect('P_MSC_S801_091122.db') as con:
+        cur = con.cursor()
+        sales = tuple(cur.execute("""SELECT * FROM sales"""))
+
+    split_into_pages(sales, 3)
