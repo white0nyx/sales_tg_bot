@@ -5,10 +5,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.reply import magnet_menu, choice_company
-from tgbot.misc.get_sales_from_5ka import best_sales, generate_text, low_prices, \
-    get_all_sales_from_all_pages_5ka, search_by_text
+from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
 from tgbot.misc.states import Stages
+from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, search_by_text
 
 
 async def store(message: Message):
