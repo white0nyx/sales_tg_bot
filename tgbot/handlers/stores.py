@@ -4,11 +4,13 @@ from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
+from tgbot.keyboards.inline import get_page_keyboard
 from tgbot.keyboards.reply import magnet_menu, choice_company
 from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
+from tgbot.misc.pages import get_page
 from tgbot.misc.states import Stages
-from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, search_by_text
+from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, search_by_text, split_into_pages
 
 
 async def store(message: Message):
@@ -30,6 +32,7 @@ async def show_sales(message: Message, state: FSMContext):
     store_code = None
     store_letter = None
     get_sales_func = None
+    pages = None
     if await state.get_state() == Stages.magnet.state:
         store_code = data.get('magnet_code')
         if store_code is None:
@@ -66,26 +69,38 @@ async def show_sales(message: Message, state: FSMContext):
     if creating_db_message:
         await creating_db_message.delete()
 
-    result_text = ''
     if message.text == 'Лучшие скидки':
+        result_text = f'🔥 <b>Топ {count_sales} самых больших скидок</b> \n\n'
         sales = best_sales(filename=filename)
-        result_text += f'🔥 <b>Топ {count_sales} самых больших скидок</b> \n\n'
-        result_text += generate_text(sales, count_sales)
+        pages = split_into_pages(sales, count_sales)
+        result_text += get_page(pages)
 
     elif message.text == 'Низкие цены':
-        result_text += f'🔥 <b>Топ {count_sales} самых дешёвых товаров</b> \n\n'
+        result_text = f'🔥 <b>Топ {count_sales} самых дешёвых товаров</b> \n\n'
         sales = low_prices(filename)
-        result_text += generate_text(sales, count_sales)
+        pages = split_into_pages(sales, count_sales)
+        result_text += get_page(pages)
 
     else:
         sales = search_by_text(filename=filename, request=message.text)
         if len(sales) == 0:
             result_text = 'По вашему запросу скидок не обнаружено'
         else:
-            result_text += f'🔥 <b>По вашему запросу обнаружено {len(sales)} скидок</b>\n\n'
-            result_text += generate_text(sales, count_sales)
+            result_text = f'🔥 <b>По вашему запросу обнаружено {len(sales)} скидок</b>\n\n'
+            pages = split_into_pages(sales, count_sales)
+            result_text += get_page(pages)
 
-    await message.answer(text=result_text, reply_markup=choice_company)
+    if len(sales) <= count_sales:
+        await message.answer(text=result_text)
+
+    else:
+        await message.answer(text=result_text, reply_markup=get_page_keyboard(max_pages=len(sales), key='sales'))
+        await message.answer(f'Мы нашли {len(sales)} скидок для вас!\n'
+                             f'Количество страниц: {len(pages)}', reply_markup=choice_company)
+
+    async with state.proxy() as data:
+        data['pages'] = pages
+
     await state.reset_state(with_data=False)
 
 

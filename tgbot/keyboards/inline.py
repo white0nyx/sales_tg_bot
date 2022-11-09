@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from tgbot.keyboards.callback_datas import city_callback
+from tgbot.keyboards.callback_datas import city_callback, pagination_call
 
 cities_choice = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -27,10 +27,46 @@ cities_choice = InlineKeyboardMarkup(inline_keyboard=[
     ]
 ])
 
-
 yes_no_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text='Да', callback_data='yes'),
         InlineKeyboardButton(text='Нет', callback_data='no')
     ]
 ])
+
+
+def get_page_keyboard(max_pages: int, key: str, page: int = 1):
+    previous_page = page - 1
+    previous_page_text = '<< '
+
+    current_page_text = f'<{page}>'
+
+    next_page = page + 1
+    next_page_text = ' >>'
+
+    markup = InlineKeyboardMarkup()
+
+    if previous_page > 0:
+        markup.insert(
+            InlineKeyboardButton(
+                text=previous_page_text,
+                callback_data=pagination_call.new(key=key, page=previous_page)
+            )
+        )
+
+    markup.insert(
+        InlineKeyboardButton(
+            text=current_page_text,
+            callback_data=pagination_call.new(key=key, page='current_page')
+        )
+    )
+
+    if next_page < max_pages:
+        markup.insert(
+            InlineKeyboardButton(
+                text=next_page_text,
+                callback_data=pagination_call.new(key=key, page=next_page)
+            )
+        )
+
+    return markup

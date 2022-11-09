@@ -89,8 +89,9 @@ def split_into_pages(sales: tuple, step: int) -> list:
 
 
 if __name__ == '__main__':
-    with sqlite3.connect('P_MSC_S801_091122.db') as con:
-        cur = con.cursor()
-        sales = tuple(cur.execute("""SELECT * FROM sales"""))
+    # with sqlite3.connect('P_MSC_S801_091122.db') as con:
+    #     cur = con.cursor()
+    #     sales = tuple(cur.execute("""SELECT * FROM sales"""))
 
-    split_into_pages(sales, 3)
+    # split_into_pages(sales, 3)
+    pass

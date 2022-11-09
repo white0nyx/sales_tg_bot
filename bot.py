@@ -9,6 +9,7 @@ from tgbot.config import load_config
 from tgbot.handlers.about_bot import register_about_bot
 from tgbot.handlers.cancel import register_cancel
 from tgbot.handlers.help import register_help_command
+from tgbot.handlers.page_buttons import register_all_pagination
 from tgbot.handlers.set_5ka_store import register_all_set_5k_store
 from tgbot.handlers.set_city import register_all_set_city
 from tgbot.handlers.set_count_sales import register_all_set_count_sales
@@ -37,6 +38,7 @@ def register_all_handlers(dp):
     register_all_store(dp)
     register_all_set_magnet_city(dp)
     register_all_set_5k_store(dp)
+    register_all_pagination(dp)
 
 
 async def main():
