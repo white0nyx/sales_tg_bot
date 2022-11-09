@@ -3,14 +3,14 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message, CallbackQuery
 
-from tgbot.keyboards.inline import yes_no_buttons, magnet_instruction
+from tgbot.keyboards.inline import yes_no_buttons, instruction_magnet
 from tgbot.keyboards.reply import cancel_button, choice_company
 from tgbot.misc.get_sales_from_magnet import check_magnet_city_code
 from tgbot.misc.states import Stages
 
 
 async def set_magnet_city_command(message: Message):
-    await message.answer('Укажите код конкретного магазина Магнит', reply_markup=magnet_instruction)
+    await message.answer('Укажите код конкретного магазина Магнит', reply_markup=instruction_magnet)
     await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_magnet_city.set()
 

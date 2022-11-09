@@ -3,14 +3,15 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.types import Message, CallbackQuery
 
-from tgbot.keyboards.inline import yes_no_buttons
+from tgbot.keyboards.inline import yes_no_buttons, instruction_5ka
 from tgbot.keyboards.reply import cancel_button, choice_company
 from tgbot.misc.get_sales_from_5ka import check_5ka_store_code
 from tgbot.misc.states import Stages
 
 
 async def set_5ka_store_command(message: Message):
-    await message.answer('Укажите код конкретного магазина Пятёрочка', reply_markup=cancel_button)
+    await message.answer('Укажите код конкретного магазина Пятёрочка', reply_markup=instruction_5ka)
+    await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_5k_store.set()
 
 
