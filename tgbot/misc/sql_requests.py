@@ -31,3 +31,19 @@ def search_by_text(filename, request: str):
         or (name LIKE '%{request_title} %')
         or (name LIKE '%{request_upper} %')
         ORDER BY percent_sale DESC"""))
+
+
+def add_user_to_db(user_id, full_name, user_name):
+
+    user_data = (user_id, full_name, user_name)
+    with sqlite3.connect('data/users.db') as con:
+        cur = con.cursor()
+        cur.execute("""CREATE TABLE IF NOT EXISTS users (
+                user_id INTEGER,
+                full_name TEXT,
+                username TEXT)""")
+
+        all_users = cur.execute("""SELECT * FROM users""")
+
+        if user_data not in all_users:
+            cur.execute("""INSERT INTO users VALUES (?, ?, ?)""", user_data)

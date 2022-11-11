@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters import Command
 from aiogram.types import Message
 
 from tgbot.keyboards.reply import choice_company
+from tgbot.misc.sql_requests import add_user_to_db
 
 
 async def start(message: Message):
@@ -16,6 +17,12 @@ async def start(message: Message):
         'Для установки города ты можешь воспользоваться командой <b><i>/set_city</i></b>.\n'
         'По умолчанию я показываю скидки в городе Ростов-на-Дону.\n\n'
         'Удачных покупок! 🛍', reply_markup=choice_company)
+
+    user_id = message.from_user.id
+    full_name = message.from_user.full_name
+    user_name = message.from_user.username
+
+    add_user_to_db(user_id, full_name, user_name)
 
 
 def register_start(dp: Dispatcher):

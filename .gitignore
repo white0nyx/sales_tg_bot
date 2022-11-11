@@ -69,3 +69,4 @@ M_*.db
 # Test files
 test*.py
 about_bot.py
+users.db
