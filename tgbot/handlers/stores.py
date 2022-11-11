@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from tgbot.keyboards.inline import get_page_keyboard
-from tgbot.keyboards.reply import magnet_menu, choice_company
+from tgbot.keyboards.reply import choice_company, sales_keyboard
 from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
 from tgbot.misc.pages import get_page
@@ -15,7 +15,7 @@ from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, sea
 
 async def store(message: Message):
     """Обработка кнопок магазинов"""
-    await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=magnet_menu)
+    await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=sales_keyboard)
     if message.text == 'Магнит':
         await Stages.magnet.set()
 

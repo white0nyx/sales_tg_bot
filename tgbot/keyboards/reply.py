@@ -8,18 +8,8 @@ choice_company = ReplyKeyboardMarkup(keyboard=[
     ]
 ], resize_keyboard=True)
 
-# Кнопки выбора скидок для Пятёрочки
-pyaterochka_menu = ReplyKeyboardMarkup(keyboard=[
-    [
-        KeyboardButton('Лучшие скидки')
-    ],
-    [
-        KeyboardButton('Низкие цены')
-    ]
-], resize_keyboard=True)
-
-# Кнопки выбора скидок для Магнита
-magnet_menu = ReplyKeyboardMarkup(keyboard=[
+# Кнопки выбора скидок
+sales_keyboard = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton('Лучшие скидки')
     ],
