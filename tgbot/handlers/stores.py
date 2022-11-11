@@ -1,3 +1,5 @@
+# Выбор магазина и его скидок
+
 import datetime
 import os
 from aiogram import Dispatcher

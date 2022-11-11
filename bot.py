@@ -1,3 +1,5 @@
+# Основной файл Бота
+
 import asyncio
 import logging
 

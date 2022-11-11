@@ -1,3 +1,5 @@
+# Работа с магазином Пятёрочка
+
 import requests
 import sqlite3
 

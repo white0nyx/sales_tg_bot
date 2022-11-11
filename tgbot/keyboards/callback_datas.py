@@ -1,3 +1,5 @@
+# Создание шаблонов CallbackData
+
 from aiogram.utils.callback_data import CallbackData
 
 # CallbackData для кнопок города

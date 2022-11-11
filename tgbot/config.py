@@ -1,3 +1,5 @@
+# Классы для формирования конфига и метод для его загрузки
+
 from dataclasses import dataclass
 
 from environs import Env

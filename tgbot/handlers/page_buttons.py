@@ -1,3 +1,5 @@
+# Обработка кнопок пагинации
+
 from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery

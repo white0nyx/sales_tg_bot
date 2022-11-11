@@ -1,3 +1,5 @@
+# Inline клавиатуры
+
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from tgbot.keyboards.callback_datas import city_callback, pagination_call

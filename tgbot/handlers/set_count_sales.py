@@ -1,3 +1,5 @@
+# Установка количества выводимых скидок за раз
+
 from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command

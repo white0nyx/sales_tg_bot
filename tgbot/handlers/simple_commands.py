@@ -1,3 +1,5 @@
+# Простые команды
+
 from aiogram import Dispatcher
 from aiogram.dispatcher.filters import Command
 from aiogram.types import Message
