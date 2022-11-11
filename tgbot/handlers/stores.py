@@ -98,17 +98,17 @@ async def show_sales(message: Message, state: FSMContext):
             result_text += get_page(pages)
 
     if len(sales) <= count_sales:
-        await message.answer(text=result_text)
+        await message.answer(text=result_text, reply_markup=sales_keyboard)
 
     else:
         await message.answer(text=result_text, reply_markup=get_page_keyboard(max_pages=len(sales), key='sales'))
         await message.answer(f'Мы нашли {len(sales)} скидок для вас!\n'
                              f'Количество страниц: {len(pages)}', reply_markup=choice_company)
 
-    async with state.proxy() as data:
-        data['pages'] = pages
+        async with state.proxy() as data:
+            data['pages'] = pages
 
-    await state.reset_state(with_data=False)
+        await state.reset_state(with_data=False)
 
 
 def register_show_sales(dp: Dispatcher):
