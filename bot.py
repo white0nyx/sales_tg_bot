@@ -6,15 +6,14 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 
 from tgbot.config import load_config
-from tgbot.handlers.about_bot import register_about_bot
+from tgbot.handlers.simple_commands import register_about_bot, register_start, register_help_command, \
+    register_all_simple_command
 from tgbot.handlers.cancel import register_cancel
-from tgbot.handlers.help import register_help_command
 from tgbot.handlers.page_buttons import register_all_pagination
 from tgbot.handlers.set_5ka_store import register_all_set_5k_store
 from tgbot.handlers.set_city import register_all_set_city
 from tgbot.handlers.set_count_sales import register_all_set_count_sales
 from tgbot.handlers.set_magnet_city import register_all_set_magnet_city
-from tgbot.handlers.start import register_start
 from tgbot.handlers.stores import register_all_store
 
 logger = logging.getLogger(__name__)
@@ -32,12 +31,10 @@ def register_all_filters(dp):
 
 def register_all_handlers(dp):
     """Регистрация обработчиков"""
-    register_start(dp)
+    register_all_simple_command(dp)
     register_cancel(dp)
-    register_help_command(dp)
     register_all_set_count_sales(dp)
     register_all_set_city(dp)
-    register_about_bot(dp)
     register_all_store(dp)
     register_all_set_magnet_city(dp)
     register_all_set_5k_store(dp)
