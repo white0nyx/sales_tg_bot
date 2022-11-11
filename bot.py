@@ -8,8 +8,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 
 from tgbot.config import load_config
-from tgbot.handlers.simple_commands import register_about_bot, register_start, register_help_command, \
-    register_all_simple_command
+from tgbot.handlers.feedback import register_all_feedback
+from tgbot.handlers.simple_commands import register_all_simple_command
 from tgbot.handlers.cancel import register_cancel
 from tgbot.handlers.page_buttons import register_all_pagination
 from tgbot.handlers.set_5ka_store import register_all_set_5k_store
@@ -41,6 +41,7 @@ def register_all_handlers(dp):
     register_all_set_magnet_city(dp)
     register_all_set_5k_store(dp)
     register_all_pagination(dp)
+    register_all_feedback(dp)
 
 
 async def main():
@@ -69,6 +70,7 @@ async def main():
                                   BotCommand('set_magnet_city', 'Установить конкретный магазин Магнита'),
                                   BotCommand('set_5ka_store', 'Установить конкретный магазин Пятёрочки'),
                                   BotCommand('set_count_sales', 'Установить количество выводимых скидок за раз'),
+                                  BotCommand('feedback', 'Обратная связь'),
                                   BotCommand('about_bot', 'Информация о боте')])
 
     # start

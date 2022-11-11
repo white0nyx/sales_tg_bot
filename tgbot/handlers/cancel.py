@@ -22,4 +22,5 @@ def register_cancel(dp: Dispatcher):
                                        Stages.set_5k_store,
                                        Stages.set_count_sales,
                                        Stages.magnet,
-                                       Stages.pyaterochka])
+                                       Stages.pyaterochka,
+                                       Stages.feedback])
