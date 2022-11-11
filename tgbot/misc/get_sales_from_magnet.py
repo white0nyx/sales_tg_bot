@@ -4,6 +4,7 @@ import sqlite3
 
 
 def get_sales_from_one_page_magnet(filename, store):
+    """Создание базы данных со всеми скидками Магазина в указанном городе"""
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -105,6 +106,7 @@ def get_sales_from_one_page_magnet(filename, store):
 
 
 def check_magnet_city_code(city_code):
+    """Проверка существования города магазина Магнит по указанному коду города"""
     headers = {
         'Accept': '*/*',
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',

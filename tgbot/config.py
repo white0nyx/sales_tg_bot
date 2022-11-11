@@ -5,6 +5,7 @@ from environs import Env
 
 @dataclass
 class DbConfig:
+    """Класс конфига для базы данных"""
     host: str
     password: str
     user: str
@@ -13,22 +14,26 @@ class DbConfig:
 
 @dataclass
 class TgBot:
+    """Класс бота"""
     token: str
     admin_ids: list[int]
 
 
 @dataclass
 class Miscellaneous:
+    """Класс прочих параметров"""
     other_params: str = None
 
 
 @dataclass
 class Config:
+    """Класс конфига бота"""
     tg_bot: TgBot
     misc: Miscellaneous
 
 
 def load_config(path: str = None):
+    """Загрузка конфига"""
     env = Env()
     env.read_env(path)
 

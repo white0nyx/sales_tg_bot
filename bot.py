@@ -21,14 +21,17 @@ logger = logging.getLogger(__name__)
 
 
 def register_all_middlewares(dp, config):
+    """Регистрация middlewares"""
     pass
 
 
 def register_all_filters(dp):
+    """Регистрация кастомных фильтров"""
     pass
 
 
 def register_all_handlers(dp):
+    """Регистрация обработчиков"""
     register_start(dp)
     register_cancel(dp)
     register_help_command(dp)
@@ -42,6 +45,7 @@ def register_all_handlers(dp):
 
 
 async def main():
+    """Функция, создающая и запускающая бота"""
     logging.basicConfig(
         level=logging.INFO,
         format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
@@ -59,6 +63,7 @@ async def main():
     register_all_filters(dp)
     register_all_handlers(dp)
 
+    # Регистрация меню команд
     await dp.bot.set_my_commands([BotCommand('start', 'Запустить бота'),
                                   BotCommand('help', 'Помощь по командам'),
                                   BotCommand('set_city', 'Выбрать город'),

@@ -2,6 +2,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from tgbot.keyboards.callback_datas import city_callback, pagination_call
 
+# Клавиатура с выбором города
 cities_choice = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text='Москва', callback_data=city_callback.new(city_name='Москва',
@@ -27,6 +28,7 @@ cities_choice = InlineKeyboardMarkup(inline_keyboard=[
     ]
 ])
 
+# Кнопки - "Да", "Нет"
 yes_no_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text='Да', callback_data='yes'),
@@ -36,6 +38,7 @@ yes_no_buttons = InlineKeyboardMarkup(inline_keyboard=[
 
 
 def get_page_keyboard(max_pages: int, key: str, page: int = 1):
+    """Формирование клавиатуры с пагинацией"""
     previous_page = page - 1
     previous_page_text = '<< '
 
@@ -72,14 +75,17 @@ def get_page_keyboard(max_pages: int, key: str, page: int = 1):
     return markup
 
 
+# Кнопка с инструкцией для установки магазина Магнита
 instruction_magnet = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text='Инструкция', url='https://www.notion.so/ab6bca8ca72e44c0969c0e61166d8e72')
     ]
 ])
 
+# Кнопка с инструкцией для установки магазина Пятёрочки
 instruction_5ka = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text='Инструкция', url='https://curly-surfboard-74f.notion.site/44c0bb27e15c441da8e889f7bd28f6e4')
+        InlineKeyboardButton(text='Инструкция',
+                             url='https://curly-surfboard-74f.notion.site/44c0bb27e15c441da8e889f7bd28f6e4')
     ]
 ])

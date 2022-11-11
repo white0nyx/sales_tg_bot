@@ -10,16 +10,19 @@ from tgbot.misc.states import Stages
 
 
 async def set_5ka_store_command(message: Message):
+    """Обработка команды set_5ka_store"""
     await message.answer('Укажите код конкретного магазина Пятёрочка', reply_markup=instruction_5ka)
     await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_5k_store.set()
 
 
 def register_set_5ka_store_command(dp: Dispatcher):
+    """Регистрация обработчика команды set_5ka_store"""
     dp.register_message_handler(set_5ka_store_command, Command('set_5ka_store'))
 
 
 async def check_5ka_store(message: Message, state: FSMContext):
+    """Обработка указанного кода магазина"""
     store_code = message.text
     store = check_5ka_store_code(store_code)
 
@@ -38,10 +41,12 @@ async def check_5ka_store(message: Message, state: FSMContext):
 
 
 def register_check_5ka_store(dp: Dispatcher):
+    """Регистрация обработчика указанного кода магазина"""
     dp.register_message_handler(check_5ka_store, state=Stages.set_5k_store)
 
 
 async def set_store_5ka(call: CallbackQuery, state: FSMContext):
+    """Обработка нажатия на кнопки подтверждения подозреваемого магазина"""
     await call.answer(cache_time=30)
     store = call.message.text.split('\n\n')[0]
 
@@ -60,10 +65,12 @@ async def set_store_5ka(call: CallbackQuery, state: FSMContext):
 
 
 def register_set_store_5ka(dp: Dispatcher):
+    """Регистрация обработчика кнопок подтверждения"""
     dp.register_callback_query_handler(set_store_5ka, state=Stages.set_5k_store)
 
 
 def register_all_set_5k_store(dp):
+    """Регистрация всех обработчиков связанных с установкой магазина Пятёрочки"""
     register_set_5ka_store_command(dp)
     register_check_5ka_store(dp)
     register_set_store_5ka(dp)

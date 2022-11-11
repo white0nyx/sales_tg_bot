@@ -10,16 +10,20 @@ from tgbot.misc.states import Stages
 
 
 async def set_magnet_city_command(message: Message):
+    """Обработка команды set_magnet_city"""
     await message.answer('Укажите код конкретного магазина Магнит', reply_markup=instruction_magnet)
     await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_magnet_city.set()
 
 
 def register_set_magnet_store_command(dp: Dispatcher):
+    """Регистрация обработчика команды set_magnet_city"""
     dp.register_message_handler(set_magnet_city_command, Command('set_magnet_city'))
 
 
 async def check_magnet_city(message: Message, state: FSMContext):
+    """Обработка кода города магазина Магнит
+    Проверка существования города и сохранение его как подозреваемого"""
     city_code = message.text
     city = check_magnet_city_code(city_code)
 
@@ -37,10 +41,12 @@ async def check_magnet_city(message: Message, state: FSMContext):
 
 
 def register_check_magnet_city(dp: Dispatcher):
+    """Регистрация обработчика кода города Магнит"""
     dp.register_message_handler(check_magnet_city, state=Stages.set_magnet_city)
 
 
 async def set_city_magnet(call: CallbackQuery, state: FSMContext):
+    """Обработка кнопок подтверждения города Магазина магнит"""
     await call.answer(cache_time=30)
     city = call.message.text.split()[-1][:-1]
     if call.data == 'no':
@@ -58,10 +64,12 @@ async def set_city_magnet(call: CallbackQuery, state: FSMContext):
 
 
 def register_set_city_magnet(dp: Dispatcher):
+    """Регистрация обработки кнопок подтверждения города Магазина магнит"""
     dp.register_callback_query_handler(set_city_magnet, state=Stages.set_magnet_city)
 
 
 def register_all_set_magnet_city(dp):
+    """Регистрация всех обработчиков связанных с установкой города магазина Магнит"""
     register_set_magnet_store_command(dp)
     register_check_magnet_city(dp)
     register_set_city_magnet(dp)

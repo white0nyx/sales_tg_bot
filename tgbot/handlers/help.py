@@ -4,6 +4,7 @@ from aiogram.types import Message
 
 
 async def help_command(message: Message):
+    """Обработчик команды help"""
     await message.answer('/start - запуск/перезапуск бота\n\n'
                          '/help - помощь по командам\n\n'
                          '/set_city - изменить город поиска\n\n'
@@ -16,4 +17,5 @@ async def help_command(message: Message):
 
 
 def register_help_command(dp: Dispatcher):
+    """Регистрация обработчика команды help"""
     dp.register_message_handler(help_command, Command('help'))

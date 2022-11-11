@@ -5,6 +5,7 @@ from tgbot.misc.work_with_text import reformat_date
 
 
 def get_sales_from_one_page_5ka(page, store):
+    """Получение скидок Пятёрочки с одной страницы"""
     headers = {
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -37,6 +38,7 @@ def get_sales_from_one_page_5ka(page, store):
 
 
 def get_all_sales_from_all_pages_5ka(filename, store):
+    """Создание базы данных со всеми скидками Пятёрочки в указанном магазине"""
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         cur.execute("""DROP TABLE IF EXISTS sales""")
@@ -87,6 +89,7 @@ def get_all_sales_from_all_pages_5ka(filename, store):
 
 
 def check_5ka_store_code(store_code):
+    """Проверка существования магазина Пятёрочки по указанному коду"""
     headers = {
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',

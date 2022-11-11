@@ -2,18 +2,21 @@ import sqlite3
 
 
 def best_sales(filename):
+    """Получение товаров с наибольшим процентом скидки"""
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY percent_sale DESC"""))
 
 
 def low_prices(filename):
+    """Получение товаров с наименьшей ценой"""
     with sqlite3.connect(filename) as con:
         cur = con.cursor()
         return tuple(cur.execute("""SELECT * FROM sales ORDER BY price_promo_min"""))
 
 
 def search_by_text(filename, request: str):
+    """Получение товаров по текстовому запросу"""
     request_lower = request.lower()
     request_upper = request.upper()
     request_title = request.title()
@@ -26,6 +29,7 @@ def search_by_text(filename, request: str):
 
 
 def reformat_date(date, is_begin):
+    """Форматирование даты в текстовый вид"""
     months = {
         '01': 'января',
         '02': 'февраля',
@@ -53,6 +57,7 @@ def reformat_date(date, is_begin):
 
 
 def generate_text(sales: tuple, count_sales):
+    """Генерация текста сообщения для вывода"""
     text = ''
 
     figures = {0: '🔸',
@@ -74,6 +79,7 @@ def generate_text(sales: tuple, count_sales):
 
 
 def split_into_pages(sales: tuple, step: int) -> list:
+    """Разделение товаров на страницы"""
     pages = []
     page_number = 0
     last_element_index = 0

@@ -8,6 +8,7 @@ from tgbot.misc.states import Stages
 
 
 async def set_count_sales_command(message: Message):
+    """Обработка команды set_count_sales"""
     await message.answer(text='Здесь вы можете указать, сколько товаров хотите видеть при выводе скидок.\n'
                               'Возможные значения находятся в промежутке от 1 до 30 включительно',
                          reply_markup=cancel_button)
@@ -16,10 +17,13 @@ async def set_count_sales_command(message: Message):
 
 
 def register_set_count_sales_command(dp: Dispatcher):
+    """Регистрация обработчика команды set_count_sales"""
     dp.register_message_handler(set_count_sales_command, Command('set_count_sales'))
 
 
 async def set_count_sales(message: Message, state: FSMContext):
+    """Обработка указанного числа отображаемых скидок
+    Проверка и установка количества отображаемых скидок за раз"""
     text = message.text
 
     try:
@@ -42,9 +46,11 @@ async def set_count_sales(message: Message, state: FSMContext):
 
 
 def register_set_count_sales(dp: Dispatcher):
+    """Регистрация обработчика указанного числа отображаемых скидок"""
     dp.register_message_handler(set_count_sales, state=Stages.set_count_sales)
 
 
 def register_all_set_count_sales(dp):
+    """Регистрация всех обработчиков связанных с установкой количества отображаемых скидок"""
     register_set_count_sales_command(dp)
     register_set_count_sales(dp)

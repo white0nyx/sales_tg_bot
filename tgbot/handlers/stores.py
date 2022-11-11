@@ -14,6 +14,7 @@ from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, sea
 
 
 async def store(message: Message):
+    """Обработка кнопок магазинов"""
     await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=magnet_menu)
     if message.text == 'Магнит':
         await Stages.magnet.set()
@@ -23,10 +24,13 @@ async def store(message: Message):
 
 
 def register_stores(dp: Dispatcher):
+    """Регистрация обработчика кнопок магазинов"""
     dp.register_message_handler(store, text=['Магнит', 'Пятёрочка'])
 
 
 async def show_sales(message: Message, state: FSMContext):
+    """Обработчик нажатия на кнопки скидок или поиска по названию
+    Вывод скидок по указанному запросу"""
     data = await state.get_data()
 
     store_code = None
@@ -105,10 +109,12 @@ async def show_sales(message: Message, state: FSMContext):
 
 
 def register_show_sales(dp: Dispatcher):
+    """Регистрация обработчика нажатия на кнопки скидок или поиска по названию"""
     dp.register_message_handler(callback=show_sales,
                                 state=[Stages.magnet, Stages.pyaterochka])
 
 
 def register_all_store(dp):
+    """Регистрация всех обработчиков связанных с выбором магазина и выводом скидок"""
     register_stores(dp)
     register_show_sales(dp)

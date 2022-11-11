@@ -6,6 +6,7 @@ from tgbot.keyboards.reply import choice_company
 
 
 async def start(message: Message):
+    """Обработка команды start"""
     await message.answer('👋')
     await message.answer('Привет! Я бот, который расскажет тебе о самых крупных скидках магазинов Пятёрочка и Магнит.\n\n'
                          'Чтобы я показывал самые актуальные для тебя скидки, я должен знать твой город.\n'
@@ -15,4 +16,5 @@ async def start(message: Message):
 
 
 def register_start(dp: Dispatcher):
+    """Регистрация обработчика команды start"""
     dp.register_message_handler(start, Command('start'))

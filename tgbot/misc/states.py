@@ -2,6 +2,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
 class Stages(StatesGroup):
+    """Класс стейтов"""
     pyaterochka = State()
     magnet = State()
     set_magnet_city = State()

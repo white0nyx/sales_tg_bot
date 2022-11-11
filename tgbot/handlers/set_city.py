@@ -9,6 +9,7 @@ from tgbot.keyboards.reply import choice_company
 
 
 async def menu_set_city(message: Message, state: FSMContext):
+    """Обработка команды set_city"""
     data = await state.get_data()
     city_name = data.get('city_name')
     if city_name:
@@ -20,10 +21,12 @@ async def menu_set_city(message: Message, state: FSMContext):
 
 
 def register_set_city(dp: Dispatcher):
+    """Регистрация обработчика команды set_city"""
     dp.register_message_handler(menu_set_city, Command('set_city'))
 
 
 async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContext):
+    """Обработка нажатия на кнопку города"""
     city_name = callback_data.get('city_name')
     pyaterochka_code = callback_data.get('pyaterochka_code')
     magnet_code = callback_data.get('magnet_code')
@@ -43,9 +46,11 @@ async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContex
 
 
 def register_city_button(dp: Dispatcher):
+    """Регистрация обработчика кнопки города"""
     dp.register_callback_query_handler(city_button, city_callback.filter())
 
 
 def register_all_set_city(dp):
+    """Регистрация всех обработчиков, связанных с установкой города"""
     register_set_city(dp)
     register_city_button(dp)
