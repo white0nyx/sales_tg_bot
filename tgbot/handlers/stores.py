@@ -76,13 +76,13 @@ async def show_sales(message: Message, state: FSMContext):
         await creating_db_message.delete()
 
     if message.text == 'Лучшие скидки':
-        result_text = f'🔥 <b>Топ самых больших скидок</b> \n'
+        result_text = f'🔥 <b>Топ самых больших скидок</b>\n\n'
         sales = best_sales(filename=filename)
         pages = split_into_pages(sales, count_sales)
         result_text += get_page(pages)
 
     elif message.text == 'Низкие цены':
-        result_text = f'🔥 <b>Топ самых дешёвых товаров</b> \n'
+        result_text = f'🔥 <b>Топ самых дешёвых товаров</b>\n\n'
         sales = low_prices(filename)
         pages = split_into_pages(sales, count_sales)
         result_text += get_page(pages)
@@ -92,7 +92,7 @@ async def show_sales(message: Message, state: FSMContext):
         if len(sales) == 0:
             result_text = 'По вашему запросу скидок не обнаружено'
         else:
-            result_text = f'🔥 <b>По вашему запросу обнаружено {len(sales)} скидок</b>\n\n'
+            result_text = f'🔥 <b>Скидки по вашему запросу</b>\n\n'
             pages = split_into_pages(sales, count_sales)
             result_text += get_page(pages)
 
