@@ -15,11 +15,11 @@ async def menu_set_city(message: Message, state: FSMContext):
     data = await state.get_data()
     city_name = data.get('city_name')
     if city_name:
-        await message.answer(text=f'Выбранный город: {city_name}\n'
+        await message.answer(text=f'🏙 Выбранный город: {city_name}\n'
                                   'Для изменения выбери город: ', reply_markup=cities_choice)
 
     else:
-        await message.answer(text='Выбери свой город:', reply_markup=cities_choice)
+        await message.answer(text='🏙 Выбери свой город:', reply_markup=cities_choice)
 
 
 def register_set_city(dp: Dispatcher):
@@ -42,7 +42,7 @@ async def city_button(call: CallbackQuery, callback_data: dict, state: FSMContex
         data['city_short_name'] = city_short_name
 
     await call.message.answer(f'Выбранный город {city_name} успешно сохранён.\n\n'
-                              f'Для изменения города воспользуйтесь командой /set_city',
+                              f'Для изменения города воспользуйтесь командой <b><i>/set_city</i></b>',
                               reply_markup=choice_company)
     await call.message.delete()
 

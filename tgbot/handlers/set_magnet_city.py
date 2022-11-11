@@ -13,8 +13,8 @@ from tgbot.misc.states import Stages
 
 async def set_magnet_city_command(message: Message):
     """Обработка команды set_magnet_city"""
-    await message.answer('Укажите код конкретного магазина Магнит', reply_markup=instruction_magnet)
-    await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
+    await message.answer('❓Укажите код конкретного магазина Магнит', reply_markup=instruction_magnet)
+    await message.answer('⚠ Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_magnet_city.set()
 
 
@@ -30,7 +30,7 @@ async def check_magnet_city(message: Message, state: FSMContext):
     city = check_magnet_city_code(city_code)
 
     if city is None:
-        await message.answer(f'Город с кодом {city_code} не обнаружен, проверьте правильность введённых данных.',
+        await message.answer(f'❌ Город с кодом {city_code} не обнаружен, проверьте правильность введённых данных.',
                              reply_markup=cancel_button)
 
     else:

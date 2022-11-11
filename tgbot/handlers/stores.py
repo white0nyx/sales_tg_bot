@@ -18,7 +18,7 @@ from tgbot.misc.work_with_text import split_into_pages
 
 async def store(message: Message):
     """Обработка кнопок магазинов"""
-    await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=sales_keyboard)
+    await message.answer('🔍 Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=sales_keyboard)
     if message.text == '🧲 Магнит':
         await Stages.magnet.set()
 
@@ -105,7 +105,7 @@ async def show_sales(message: Message, state: FSMContext):
 
     else:
         await message.answer(text=result_text, reply_markup=get_page_keyboard(max_pages=len(sales), key='sales'))
-        await message.answer(f'Мы нашли {len(sales)} скидок для вас!\n'
+        await message.answer(f'✅ Мы нашли {len(sales)} скидок для вас!\n'
                              f'Количество страниц: {len(pages)}', reply_markup=choice_company)
 
         async with state.proxy() as data:

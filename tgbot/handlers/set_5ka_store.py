@@ -13,8 +13,8 @@ from tgbot.misc.states import Stages
 
 async def set_5ka_store_command(message: Message):
     """Обработка команды set_5ka_store"""
-    await message.answer('Укажите код конкретного магазина Пятёрочка', reply_markup=instruction_5ka)
-    await message.answer('Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
+    await message.answer('❓ Укажите код конкретного магазина Пятёрочка', reply_markup=instruction_5ka)
+    await message.answer('⚠ Вы можете воспользоваться инструкцией по кнопке выше', reply_markup=cancel_button)
     await Stages.set_5k_store.set()
 
 
@@ -29,7 +29,7 @@ async def check_5ka_store(message: Message, state: FSMContext):
     store = check_5ka_store_code(store_code)
 
     if store is None:
-        await message.answer(f'Магазин с кодом {store_code} не обнаружен, проверьте правильность введённых данных.',
+        await message.answer(f'❌ Магазин с кодом {store_code} не обнаружен, проверьте правильность введённых данных.',
                              reply_markup=cancel_button)
 
     else:
@@ -62,7 +62,7 @@ async def set_store_5ka(call: CallbackQuery, state: FSMContext):
             del data['suspect_city_code']
             del data['suspect_city']
             await state.reset_state(with_data=False)
-            await call.message.answer(f'Адрес {store} для магазина Пятёрочка установлен',
+            await call.message.answer(f'✅ Адрес {store} для магазина Пятёрочка установлен',
                                       reply_markup=choice_company)
 
 

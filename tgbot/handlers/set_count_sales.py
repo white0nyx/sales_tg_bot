@@ -11,7 +11,7 @@ from tgbot.misc.states import Stages
 
 async def set_count_sales_command(message: Message):
     """Обработка команды set_count_sales"""
-    await message.answer(text='Здесь вы можете указать, сколько товаров хотите видеть при выводе скидок.\n'
+    await message.answer(text='Здесь вы можете указать, сколько товаров хотите видеть при выводе скидок.\n\n'
                               'Возможные значения находятся в промежутке от 1 до 30 включительно',
                          reply_markup=cancel_button)
 
@@ -31,7 +31,7 @@ async def set_count_sales(message: Message, state: FSMContext):
     try:
         count_sales = int(text)
         if not (1 <= count_sales <= 30):
-            await message.answer('🛑 Неверно указано значение',
+            await message.answer('🚫 Неверно указано значение',
                                  reply_markup=cancel_button)
 
         else:
