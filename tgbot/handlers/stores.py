@@ -11,8 +11,9 @@ from tgbot.keyboards.reply import choice_company, sales_keyboard
 from tgbot.misc.get_sales_from_5ka import get_all_sales_from_all_pages_5ka
 from tgbot.misc.get_sales_from_magnet import get_sales_from_one_page_magnet
 from tgbot.misc.pages import get_page
+from tgbot.misc.sql_requests import best_sales, search_by_text, low_prices
 from tgbot.misc.states import Stages
-from tgbot.misc.work_with_text import best_sales, generate_text, low_prices, search_by_text, split_into_pages
+from tgbot.misc.work_with_text import split_into_pages
 
 
 async def store(message: Message):
