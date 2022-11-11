@@ -87,7 +87,7 @@ def split_into_pages(sales: tuple, step: int) -> list:
     last_element_index = 0
     for i in range(step, len(sales) + step, step):
         page_number += 1
-        title = f'Страница {page_number}\n'
+        title = f'Страница {page_number}\n\n'
         main_text = generate_text(sales[last_element_index:i], step)
 
         pages.append(title + main_text)
