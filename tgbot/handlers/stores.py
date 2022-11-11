@@ -19,16 +19,16 @@ from tgbot.misc.work_with_text import split_into_pages
 async def store(message: Message):
     """Обработка кнопок магазинов"""
     await message.answer('Сделайте выбор или введите текст для поиска по названию товара.', reply_markup=sales_keyboard)
-    if message.text == 'Магнит':
+    if message.text == '🧲 Магнит':
         await Stages.magnet.set()
 
-    elif message.text == 'Пятёрочка':
+    elif message.text == '5️⃣ Пятёрочка':
         await Stages.pyaterochka.set()
 
 
 def register_stores(dp: Dispatcher):
     """Регистрация обработчика кнопок магазинов"""
-    dp.register_message_handler(store, text=['Магнит', 'Пятёрочка'])
+    dp.register_message_handler(store, text=['🧲 Магнит', '5️⃣ Пятёрочка'])
 
 
 async def show_sales(message: Message, state: FSMContext):
@@ -76,13 +76,13 @@ async def show_sales(message: Message, state: FSMContext):
     if creating_db_message:
         await creating_db_message.delete()
 
-    if message.text == 'Лучшие скидки':
+    if message.text == '💯 Лучшие скидки':
         result_text = f'🔥 <b>Топ самых больших скидок</b>\n\n'
         sales = best_sales(filename=filename)
         pages = split_into_pages(sales, count_sales)
         result_text += get_page(pages)
 
-    elif message.text == 'Низкие цены':
+    elif message.text == '📉 Низкие цены':
         result_text = f'🔥 <b>Топ самых дешёвых товаров</b>\n\n'
         sales = low_prices(filename)
         pages = split_into_pages(sales, count_sales)
@@ -96,6 +96,9 @@ async def show_sales(message: Message, state: FSMContext):
             result_text = f'🔥 <b>Скидки по вашему запросу</b>\n\n'
             pages = split_into_pages(sales, count_sales)
             result_text += get_page(pages)
+
+            await message.answer(result_text, reply_markup=choice_company)
+            return
 
     if len(sales) <= count_sales:
         await message.answer(text=result_text, reply_markup=sales_keyboard)
